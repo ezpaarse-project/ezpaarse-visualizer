@@ -1,0 +1,54 @@
+<html>
+<head>
+  <title>Visualizer</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="css/dc.css" />
+  <style>
+    fieldset { display: inline-block }
+    #charts { margin-top: 20px }
+  </style>
+</head>
+<body>
+  <fieldset id="import">
+    <legend>Importer un fichier résultat ezPAARSE</legend>
+    <input type="file" id="file"><span id="load-progress"></span>
+
+    <div>
+      <label for="granularity">Consultations par</label>
+      <select id="granularity">
+        <option value="month">mois</option>
+        <option value="week">semaine</option>
+        <option value="day" selected>jour</option>
+        <option value="hour">heure</option>
+        <option value="minute">minute</option>
+      </select>
+    </div>
+
+    <div>
+      Période : entre le <span id="p-min">...</span> et le <span id="p-max">...</span>
+    </div>
+  </fieldset>
+
+  <div id="charts">
+    <fieldset>
+      <legend>Évolution des consultations</legend>
+      <div id="line-chart"></div>
+    </fieldset>
+    <fieldset>
+      <legend>Consultations par plateforme</legend>
+      <div id="bar-chart"></div>
+    </fieldset>
+    <fieldset>
+      <legend>Types de consultation</legend>
+      <div id="pie-chart"></div>
+    </fieldset>
+  </div>
+
+  <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="js/d3.min.js"></script>
+  <script type="text/javascript" src="js/crossfilter.js"></script>
+  <script type="text/javascript" src="js/dc.min.js"></script>
+  <script type="text/javascript" src="js/csv.min.js"></script>
+  <script type="text/javascript" src="js/main.js"></script>
+</body>
+</html>

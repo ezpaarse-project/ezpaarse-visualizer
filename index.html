@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title>Visualizer</title>
+  <title>ezPAARSE Visualizer</title>
   <meta charset="utf-8">
   <link rel="stylesheet" type="text/css" href="css/dc.css" />
   <style>
@@ -10,36 +10,36 @@
 </head>
 <body>
   <fieldset id="import">
-    <legend>Importer un fichier résultat ezPAARSE</legend>
+    <legend>Import an ezPAARSE result file</legend>
     <input type="file" id="file"><span id="load-progress"></span>
 
     <div>
-      <label for="granularity">Consultations par</label>
+      <label for="granularity">Consultations per</label>
       <select id="granularity">
-        <option value="month">mois</option>
-        <option value="week">semaine</option>
-        <option value="day" selected>jour</option>
-        <option value="hour">heure</option>
+        <option value="month">month</option>
+        <option value="week">week</option>
+        <option value="day" selected>day</option>
+        <option value="hour">hour</option>
         <option value="minute">minute</option>
       </select>
     </div>
 
     <div>
-      Période : entre le <span id="p-min">...</span> et le <span id="p-max">...</span>
+      Périod : between <span id="p-min">...</span> and <span id="p-max">...</span>
     </div>
   </fieldset>
 
   <div id="charts">
     <fieldset>
-      <legend>Évolution des consultations</legend>
+      <legend>Evolution of the consultations</legend>
       <div id="line-chart"></div>
     </fieldset>
     <fieldset>
-      <legend>Consultations par plateforme</legend>
+      <legend>Consultations per platform</legend>
       <div id="bar-chart"></div>
     </fieldset>
     <fieldset>
-      <legend>Types de consultation</legend>
+      <legend>Consultation types</legend>
       <div id="pie-chart"></div>
     </fieldset>
   </div>

@@ -111,15 +111,17 @@ $("document").ready(function () {
       .legend(dc.legend().x(50).y(0).itemHeight(13).gap(5))
       .yAxisLabel("Consultations");
 
-    var brush     = lineChart.brush();
-    var extent    = brush.extent();
-    var periodMin = $('#p-min').text(minDate.toLocaleString());
-    var periodMax = $('#p-max').text(maxDate.toLocaleString());
+    var brush       = lineChart.brush();
+    var extent      = brush.extent();
+    var periodMin   = $('#p-min').text(minDate.toLocaleString());
+    var periodMax   = $('#p-max').text(maxDate.toLocaleString());
+    var eventsCount = $('#events-count').text(dateDim.top(Number.POSITIVE_INFINITY).length);
     // brush.on('brush', function () { console.log('move'); });
     // brush.on('brushstart', function () { console.log('start'); });
     brush.on('brushend', function () {
       extent = brush.extent();
 
+      eventsCount.text(dateDim.top(Number.POSITIVE_INFINITY).length);
       if (extent[0].getTime() !== extent[1].getTime()) {
         periodMin.text(extent[0].toLocaleString());
         periodMax.text(extent[1].toLocaleString());

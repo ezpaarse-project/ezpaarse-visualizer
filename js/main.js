@@ -45,8 +45,10 @@ $("document").ready(function () {
         d.dd = new Date(d.timestamp * 1000);
       } else if (d.datetime) {
         d.dd = parseDatetime(d.datetime);
-      } else {
+      } else if (d.date) {
         d.dd = parseDate(d.date);
+      } else {
+        return;
       }
 
       switch (granularity) {

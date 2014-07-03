@@ -66,8 +66,8 @@ $("document").ready(function () {
           d.dd = d3.time.minute(d.dd);
       }
 
-      if (!rtypes[d.rtype]) { rtypes[d.rtype] = true; }
-      if (!mimes[d.mime])   { mimes[d.mime]   = true; }
+      if (d.rtype && !rtypes[d.rtype]) { rtypes[d.rtype] = true; }
+      if (d.mime && !mimes[d.mime])    { mimes[d.mime]   = true; }
     });
 
     var dateDim      = ndx.dimension(function (d) { return d.dd; });

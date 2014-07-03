@@ -37,8 +37,10 @@ $("document").ready(function () {
     var parseDate     = d3.time.format('%Y-%m-%d').parse;
     var parseDatetime = d3.time.format.iso.parse;
 
-    var halfWidth   = ($(document).width() / 2) - 50;
-    var granularity = $('#granularity').val();
+    var granularity   = $('#granularity').val();
+
+    var rtypes = {};
+    var mimes  = {};
 
     data.forEach(function (d) {
       if (d.timestamp) {
@@ -63,29 +65,43 @@ $("document").ready(function () {
         case 'minute':
           d.dd = d3.time.minute(d.dd);
       }
+
+      if (!rtypes[d.rtype]) { rtypes[d.rtype] = true; }
+      if (!mimes[d.mime])   { mimes[d.mime]   = true; }
     });
 
     var dateDim      = ndx.dimension(function (d) { return d.dd; });
     var platformsDim = ndx.dimension(function (d) { return d.platform; });
     var mimeDim      = ndx.dimension(function (d) { return d.mime; });
+    var rtypeDim     = ndx.dimension(function (d) { return d.rtype; });
 
     var minDate = new Date(dateDim.bottom(1)[0].dd);
     var maxDate = new Date(dateDim.top(1)[0].dd);
 
-    var mimeHTML = dateDim.group().reduceSum(function (d) { return d.mime == "HTML" ? 1 : 0; });
-    var mimePDF  = dateDim.group().reduceSum(function (d) { return d.mime == "PDF" ? 1 : 0; });
-    var mimeMISC = dateDim.group().reduceSum(function (d) { return d.mime == "MISC" ? 1 : 0; });
+    var groupBy = function (field, value) {
+      return dateDim.group().reduceSum(function (d) { return d[field] == value ? 1 : 0; });
+    };
 
-    var lineChart = dc.lineChart('#line-chart');
-    var barChart  = dc.barChart('#bar-chart');
-    var pieChart  = dc.pieChart("#pie-chart");
+    var lineChart   = dc.lineChart('#line-chart');
+    var barChart    = dc.barChart('#bar-chart');
+    var mimesChart  = dc.pieChart("#pie-chart-mimes");
+    var rtypesChart = dc.pieChart("#pie-chart-rtypes");
 
+    var firstGroup = true;
     lineChart
-      .width(halfWidth).height(300)
-      .dimension(dateDim)
-      .group(mimeHTML, "HTML")
-      .stack(mimePDF, "PDF")
-      .stack(mimeMISC, "MISC")
+      .width(500).height(300)
+      .dimension(dateDim);
+
+    for (var mime in mimes) {
+      if (firstGroup) {
+        lineChart.group(groupBy('mime', mime), mime);
+        firstGroup = false;
+      } else {
+        lineChart.stack(groupBy('mime', mime), mime);
+      }
+    }
+      
+    lineChart
       .x(d3.time.scale().domain([minDate, maxDate]))
       .renderArea(true)
       .mouseZoomable(false)
@@ -114,7 +130,7 @@ $("document").ready(function () {
     });
 
     barChart
-      .width(halfWidth).height(300)
+      .width(500).height(300)
       .dimension(platformsDim)
       .group(platformsDim.group())
       .x(d3.scale.ordinal().domain(data.map(function(d) { return d.platform; })))
@@ -130,10 +146,19 @@ $("document").ready(function () {
         barChart.rescale();
     });
 
-    pieChart
+    mimesChart
       .width(300).height(300)
       .dimension(mimeDim)
       .group(mimeDim.group())
+      .innerRadius(30)
+      .label(function (d) {
+        return d.data.key + ' (' + d.data.value + ')';
+      });
+
+    rtypesChart
+      .width(300).height(300)
+      .dimension(rtypeDim)
+      .group(rtypeDim.group())
       .innerRadius(30)
       .label(function (d) {
         return d.data.key + ' (' + d.data.value + ')';

@@ -5,24 +5,35 @@ $("document").ready(function () {
     alert('The File APIs are not fully supported in this browser.');
   }
 
+  var progress = $('#load-progress')
+
+  var distance = function(a, b) {
+    return Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2);
+  }
+  var tree = new kdTree(quadrillage, distance, ["x", "y"]);
+
   function handleFileSelect(evt) {
 
     var file = evt.target.files[0];
     if (!file) { return; }
 
-    var reader   = new FileReader();
-    var progress = $('#load-progress').text('0%');
+    var reader = new FileReader();
+    progress.text('Reading file: 0%');
 
     reader.onprogress = function (evt) {
       if (evt.lengthComputable) {
         var percentLoaded = Math.round((evt.loaded / evt.total) * 100);
-        progress.text(percentLoaded + '%');
+        progress.text('Reading file: ' + percentLoaded + '%');
       }
     };
 
     reader.onload = function (f) {
       progress.text('100%');
-      var data = new CSV(f.target.result, { header: true, delimiter: ';' }).parse();
+      var ext = file.name.substr(file.name.lastIndexOf('.') + 1);
+      var delimiter = ';';
+      if (ext == 'txt' || ext == 'tsv') { delimiter = '\t'; }
+
+      var data = new CSV(f.target.result, { header: true, delimiter: delimiter }).parse();
 
       $('#granularity').off('change').on('change', function () { build(data); });
       build(data);
@@ -38,11 +49,19 @@ $("document").ready(function () {
     var parseDatetime = d3.time.format.iso.parse;
 
     var granularity   = $('#granularity').val();
+    var geoAvailable  = data[0].hasOwnProperty('geoip-latitude') && data[0].hasOwnProperty('geoip-longitude');
+
+    if (geoAvailable) {
+      $('#choropleth-chart').text('');
+    } else {
+      $('#choropleth-chart').text('Not available, add geoip-latitude and geoip-longitude to access this feature');
+    }
 
     var rtypes = {};
     var mimes  = {};
 
     data.forEach(function (d) {
+
       if (d.timestamp) {
         d.dd = new Date(d.timestamp * 1000);
       } else if (d.datetime) {
@@ -68,12 +87,30 @@ $("document").ready(function () {
 
       if (d.rtype && !rtypes[d.rtype]) { rtypes[d.rtype] = true; }
       if (d.mime && !mimes[d.mime])    { mimes[d.mime]   = true; }
+      if (geoAvailable && d['geoip-latitude'] && d['geoip-longitude']) {
+
+        var nearest = tree.nearest({
+          x: d['geoip-longitude'],
+          y: d['geoip-latitude']
+        }, 1, 0.1);
+        if (nearest.length > 0) {
+          d.departmentName = nearest[0][0].name;
+        } else {
+          d.departmentName = '';
+        }
+      }
     });
 
-    var dateDim      = ndx.dimension(function (d) { return d.dd; });
+    var dateDim      = ndx.dimension(function (d) {
+      return d.dd;
+    });
     var platformsDim = ndx.dimension(function (d) { return d.platform; });
     var mimeDim      = ndx.dimension(function (d) { return d.mime; });
     var rtypeDim     = ndx.dimension(function (d) { return d.rtype; });
+    var departmentsDim;
+    if (geoAvailable) {
+      departmentsDim = ndx.dimension(function (d) { return d.departmentName; });
+    }
 
     var minDate = new Date(dateDim.bottom(1)[0].dd);
     var maxDate = new Date(dateDim.top(1)[0].dd);
@@ -100,7 +137,6 @@ $("document").ready(function () {
         lineChart.stack(groupBy('mime', mime), mime);
       }
     }
-      
     lineChart
       .x(d3.time.scale().domain([minDate, maxDate]))
       .renderArea(true)
@@ -166,7 +202,57 @@ $("document").ready(function () {
         return d.data.key + ' (' + d.data.value + ')';
       });
 
+    if (geoAvailable) {
+      var geoChart         = dc.geoChoroplethChart("#choropleth-chart");
+      var departmentsGroup = departmentsDim.group();
+      var colorRanges      = ["#E2F2FF", "#C4E4FF", "#9ED2FF", "#81C5FF", "#6BBAFF", "#51AEFF", "#36A2FF", "#1E96FF", "#0089FF", "#0061B5"];
+      var dMax;
+      var top = departmentsGroup.top(2);
+
+      // if (top[0].name || !top[1]) {
+      //   dMax = top[0].value;
+      // } else {
+      //   dMax = top[1].value;
+      // }
+
+      var zoom = function(target) {
+        var zoom = d3.behavior.zoom()
+            .scaleExtent([1, 13])
+            .on("zoom", function move() {
+              var t = d3.event.translate;
+              var s = d3.event.scale;
+              var h = mapHeight / 3;
+              zoom.translate(t);
+              g.style("stroke-width", 1 / s).attr("transform", "translate(" + t + "),scale(" + s + ")");
+            });
+
+        var mappa     = d3.select(target).call(zoom);
+        var g         = mappa.select('g');
+        var mapHeight = d3.select(target).attr('height')
+      };
+
+      geoChart
+        .width(600).height(600)
+        .dimension(departmentsDim)
+        .group(departmentsGroup)
+        .projection(d3.geo.mercator().center([8, 47]).scale(2000))
+        .colorCalculator(function (d) {
+          if (!d) { return '#ccc'; }
+
+          var index = Math.floor(d / top[(top[0].name || !top[1]) ? 0 : 1].value * 10);
+          if (index > 9) { index = 9; }
+          return colorRanges[index];
+        })
+        .overlayGeoJson(geoJson.features, "department", function (d) {
+          return d.properties.name;
+        })
+        .title(function (d) {
+          return "Department: " + d.key + "\nConsultations: " + (d.value ? d.value : 0);
+        });
+    }
+
     dc.renderAll();
+    if (geoAvailable) { zoom("#choropleth-chart"); }
   }
 
   var fileInput = $('#file').change(handleFileSelect);

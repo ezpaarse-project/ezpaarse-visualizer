@@ -5,7 +5,8 @@ $("document").ready(function () {
     alert('The File APIs are not fully supported in this browser.');
   }
 
-  var progress = $('#load-progress')
+  var status   = $('#status');
+  var progress = $('#progress');
 
   var distance = function(a, b) {
     return Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2);
@@ -18,12 +19,13 @@ $("document").ready(function () {
     if (!file) { return; }
 
     var reader = new FileReader();
-    progress.text('Reading file: 0%');
+    status.text('Reading file:')
+    progress.text('0%');
 
     reader.onprogress = function (evt) {
       if (evt.lengthComputable) {
         var percentLoaded = Math.round((evt.loaded / evt.total) * 100);
-        progress.text('Reading file: ' + percentLoaded + '%');
+        progress.text(percentLoaded + '%');
       }
     };
 
@@ -43,6 +45,7 @@ $("document").ready(function () {
   }
 
   function build(data) {
+
     var ndx  = crossfilter(data);
 
     var parseDate     = d3.time.format('%Y-%m-%d').parse;
@@ -62,6 +65,10 @@ $("document").ready(function () {
 
     var i = 0;
     var l = data.length;
+
+    status.text('Processing data:');
+    progress.text('0/' + l);
+
     (function processData(callback) {
 
       var m = i + 100;
@@ -112,6 +119,8 @@ $("document").ready(function () {
       progress.text(m + '/' + l);
 
       if (m == l) {
+        status.text('Done');
+        progress.text('');
         callback();
       } else {
         setTimeout(function () { processData(callback); });
@@ -133,6 +142,10 @@ $("document").ready(function () {
       var groupBy = function (field, value) {
         return dateDim.group().reduceSum(function (d) { return d[field] == value ? 1 : 0; });
       };
+
+      // reset current charts
+      dc.deregisterAllCharts();
+      dc.renderlet(null);
 
       var lineChart   = dc.lineChart('#line-chart');
       var barChart    = dc.barChart('#bar-chart');

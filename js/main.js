@@ -239,7 +239,7 @@ $("document").ready(function () {
 
         var zoom = function(target) {
           var zoom = d3.behavior.zoom()
-              .scaleExtent([1, 13])
+              .scaleExtent([1, 15])
               .on("zoom", function move() {
                 var t = d3.event.translate;
                 var s = d3.event.scale;

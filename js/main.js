@@ -13,9 +13,9 @@ $("document").ready(function () {
   }
   var tree = new kdTree(quadrillage, distance, ["x", "y"]);
 
-  function handleFileSelect(evt) {
+  function readFile() {
 
-    var file = evt.target.files[0];
+    var file = $('#file').prop('files')[0];
     if (!file) { return; }
 
     var reader = new FileReader();
@@ -37,7 +37,6 @@ $("document").ready(function () {
 
       var data = new CSV(f.target.result, { header: true, delimiter: delimiter }).parse();
 
-      $('#granularity').off('change').on('change', function () { build(data); });
       build(data);
     };
 
@@ -278,5 +277,5 @@ $("document").ready(function () {
     });
   }
 
-  var fileInput = $('#file').change(handleFileSelect);
+  $('#launcher').click(readFile);
 });

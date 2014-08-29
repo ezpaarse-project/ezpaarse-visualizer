@@ -138,6 +138,10 @@ $("document").ready(function () {
       dc.deregisterAllCharts();
       dc.renderlet(null);
 
+      dc.dataCount("#data-count")
+        .dimension(ndx)
+        .group(ndx.groupAll());
+
       var lineChart   = dc.lineChart('#line-chart');
       var barChart    = dc.barChart('#bar-chart');
       var mimesChart  = dc.pieChart("#pie-chart-mimes");
@@ -146,6 +150,7 @@ $("document").ready(function () {
       var firstGroup = true;
       lineChart
         .width(500).height(300)
+        .margins({top: 30, right: 60, bottom: 25, left: 60})
         .dimension(dateDim);
 
       for (var mime in mimes) {
@@ -163,8 +168,7 @@ $("document").ready(function () {
         .brushOn(true)
         .elasticY(true)
         .renderHorizontalGridLines(true)
-        .legend(dc.legend().x(50).y(0).itemHeight(13).gap(5))
-        .yAxisLabel("Consultations");
+        .legend(dc.legend().x(70).y(0).itemHeight(13).gap(5));
 
       var brush       = lineChart.brush();
       var extent      = brush.extent();
@@ -188,13 +192,13 @@ $("document").ready(function () {
 
       barChart
         .width(500).height(300)
+        .margins({top: 30, right: 60, bottom: 25, left: 60})
         .dimension(platformsDim)
         .group(platformsDim.group())
         .x(d3.scale.ordinal().domain(data.map(function(d) { return d.platform; })))
         .xUnits(dc.units.ordinal)
         .elasticY(true)
-        .renderHorizontalGridLines(true)
-        .yAxisLabel("Consultations");
+        .renderHorizontalGridLines(true);
 
       barChart.on("preRedraw", function (chart) {
           barChart.rescale();

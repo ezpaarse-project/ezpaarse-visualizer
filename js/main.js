@@ -19,18 +19,10 @@ $("document").ready(function () {
     if (!file) { return; }
 
     var reader = new FileReader();
-    status.text('Reading file:')
-    progress.text('0%');
-
-    reader.onprogress = function (evt) {
-      if (evt.lengthComputable) {
-        var percentLoaded = Math.round((evt.loaded / evt.total) * 100);
-        progress.text(percentLoaded + '%');
-      }
-    };
+    status.text('Reading file');
+    progress.width('0%');
 
     reader.onload = function (f) {
-      progress.text('100%');
       var ext = file.name.substr(file.name.lastIndexOf('.') + 1);
       var delimiter = ';';
       if (ext == 'txt' || ext == 'tsv') { delimiter = '\t'; }
@@ -65,8 +57,8 @@ $("document").ready(function () {
     var i = 0;
     var l = data.length;
 
-    status.text('Processing data:');
-    progress.text('0/' + l);
+    status.text('Processing data');
+    progress.text('0/' + l).width(0);
 
     (function processData(callback) {
 
@@ -115,11 +107,11 @@ $("document").ready(function () {
         }
       }
 
-      progress.text(m + '/' + l);
+      progress.text(m + '/' + l).width(m / l * 100 + '%');
 
       if (m == l) {
         status.text('Done');
-        progress.text('');
+        progress.width('100%');
         callback();
       } else {
         setTimeout(function () { processData(callback); });

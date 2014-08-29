@@ -142,35 +142,33 @@ $("document").ready(function () {
         .dimension(ndx)
         .group(ndx.groupAll());
 
-      var lineChart   = dc.lineChart('#line-chart');
       var barChart    = dc.barChart('#bar-chart');
       var mimesChart  = dc.pieChart("#pie-chart-mimes");
       var rtypesChart = dc.pieChart("#pie-chart-rtypes");
+      var composite   = dc.compositeChart('#line-chart');
 
-      var firstGroup = true;
-      lineChart
-        .width(500).height(300)
-        .margins({top: 30, right: 60, bottom: 25, left: 60})
-        .dimension(dateDim);
+      var composeCharts = [];
+      var color = d3.scale.category20();
 
       for (var mime in mimes) {
-        if (firstGroup) {
-          lineChart.group(groupBy('mime', mime), mime);
-          firstGroup = false;
-        } else {
-          lineChart.stack(groupBy('mime', mime), mime);
-        }
+        composeCharts.push(dc.lineChart(composite)
+          .colors([color(mime)])
+          .group(groupBy('mime', mime), mime));
       }
-      lineChart
+
+      composite
+        .width(500).height(300)
+        .dimension(dateDim)
+        .margins({top: 30, right: 60, bottom: 25, left: 60})
         .x(d3.time.scale().domain([minDate, maxDate]))
-        .renderArea(true)
+        .compose(composeCharts)
         .mouseZoomable(false)
         .brushOn(true)
         .elasticY(true)
         .renderHorizontalGridLines(true)
         .legend(dc.legend().x(70).y(0).itemHeight(13).gap(5));
 
-      var brush       = lineChart.brush();
+      var brush       = composite.brush();
       var extent      = brush.extent();
       var periodMin   = $('#p-min').text(minDate.toLocaleString());
       var periodMax   = $('#p-max').text(maxDate.toLocaleString());

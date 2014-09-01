@@ -120,6 +120,7 @@ $("document").ready(function () {
 
       var dateDim      = ndx.dimension(function (d) { return d.dd; });
       var platformsDim = ndx.dimension(function (d) { return d.platform; });
+      var titleDim     = ndx.dimension(function (d) { return d.publication_title; });
       var mimeDim      = ndx.dimension(function (d) { return d.mime; });
       var rtypeDim     = ndx.dimension(function (d) { return d.rtype; });
       var departmentsDim;
@@ -267,7 +268,36 @@ $("document").ready(function () {
       }
 
       dc.renderAll();
-      if (geoAvailable) { zoom("#choropleth-chart"); }
+
+      var updateDatatable = function () {
+        var tbody = $('#data-table tbody').empty();
+        var tfoot = $('#data-table tfoot').empty();
+
+        titleDim.group().top(11).forEach(function (title) {
+          var tr = $('<tr></tr>');
+
+          if (title.key) {
+            tr.append($('<td></td>').text(title.key));
+            tr.append($('<td></td>').text(title.value));
+            tbody.append(tr);
+          } else {
+            tr.append($('<td></td>').text('Title not available'));
+            tr.append($('<td></td>').text(title.value));
+            tfoot.append(tr);
+          }
+        });
+      };
+      updateDatatable();
+
+      barChart.on('filtered', updateDatatable);
+      mimesChart.on('filtered', updateDatatable);
+      rtypesChart.on('filtered', updateDatatable);
+      composite.on('filtered', updateDatatable);
+
+      if (geoAvailable) {
+        geoChart.on('filtered', updateDatatable);
+        zoom("#choropleth-chart");
+      }
     });
   }
 

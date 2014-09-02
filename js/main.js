@@ -208,7 +208,7 @@ $("document").ready(function () {
         .width(300).height(300)
         .dimension(mimeDim)
         .group(mimeDim.group())
-        .innerRadius(30)
+        .innerRadius(50)
         .label(function (d) {
           return d.data.key + ' (' + d.data.value + ')';
         });
@@ -217,7 +217,7 @@ $("document").ready(function () {
         .width(300).height(300)
         .dimension(rtypeDim)
         .group(rtypeDim.group())
-        .innerRadius(30)
+        .innerRadius(50)
         .label(function (d) {
           return d.data.key + ' (' + d.data.value + ')';
         });

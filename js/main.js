@@ -143,10 +143,16 @@ $("document").ready(function () {
         .dimension(ndx)
         .group(ndx.groupAll());
 
-      var barChart    = dc.barChart('#bar-chart');
+      var rowChart    = dc.rowChart('#bar-chart');
       var mimesChart  = dc.pieChart("#pie-chart-mimes");
       var rtypesChart = dc.pieChart("#pie-chart-rtypes");
       var composite   = dc.compositeChart('#line-chart');
+
+      composite.on("postRender", function rotateAxisLabels(c) {
+        d3.selectAll('#line-chart .axis.x text')
+          .style("text-anchor", "end" )
+          .attr("transform", function(d) { return "rotate(-45, -4, 9) "; });
+      });
 
       var composeCharts = [];
       var color = d3.scale.category20();
@@ -160,7 +166,7 @@ $("document").ready(function () {
       composite
         .width(500).height(300)
         .dimension(dateDim)
-        .margins({top: 30, right: 60, bottom: 25, left: 60})
+        .margins({top: 30, right: 60, bottom: 40, left: 60})
         .x(d3.time.scale().domain([minDate, maxDate]))
         .compose(composeCharts)
         .mouseZoomable(false)
@@ -189,22 +195,15 @@ $("document").ready(function () {
         }
       });
 
-      barChart
+      rowChart
         .width(500).height(300)
-        .margins({top: 30, right: 60, bottom: 25, left: 60})
+        .margins({top: 30, right: 30, bottom: 30, left: 30})
         .dimension(platformsDim)
         .group(platformsDim.group())
+        .colors(['#3182BD'])
         .x(d3.scale.ordinal().domain(data.map(function(d) { return d.platform; })))
-        .xUnits(dc.units.ordinal)
-        .elasticY(true)
-        .renderHorizontalGridLines(true);
-
-      barChart.on("preRedraw", function (chart) {
-          barChart.rescale();
-      });
-      barChart.on("preRender", function (chart) {
-          barChart.rescale();
-      });
+        .ordering(function(d) { return -d.value })
+        .elasticX(true);
 
       mimesChart
         .width(300).height(300)
@@ -289,7 +288,7 @@ $("document").ready(function () {
       };
       updateDatatable();
 
-      barChart.on('filtered', updateDatatable);
+      rowChart.on('filtered', updateDatatable);
       mimesChart.on('filtered', updateDatatable);
       rtypesChart.on('filtered', updateDatatable);
       composite.on('filtered', updateDatatable);

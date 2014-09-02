@@ -119,7 +119,7 @@ $("document").ready(function () {
     })(function buildGraphs() {
 
       var dateDim      = ndx.dimension(function (d) { return d.dd; });
-      var platformsDim = ndx.dimension(function (d) { return d.platform; });
+      var platformsDim = ndx.dimension(function (d) { return d.platform_name || d.platform; });
       var titleDim     = ndx.dimension(function (d) { return d.publication_title; });
       var mimeDim      = ndx.dimension(function (d) { return d.mime; });
       var rtypeDim     = ndx.dimension(function (d) { return d.rtype; });
@@ -201,7 +201,6 @@ $("document").ready(function () {
         .dimension(platformsDim)
         .group(platformsDim.group())
         .colors(['#3182BD'])
-        .x(d3.scale.ordinal().domain(data.map(function(d) { return d.platform; })))
         .ordering(function(d) { return -d.value })
         .elasticX(true);
 

@@ -166,7 +166,7 @@ $("document").ready(function () {
       composite
         .width(500).height(300)
         .dimension(dateDim)
-        .margins({top: 30, right: 60, bottom: 40, left: 60})
+        .margins({top: 30, right: 60, bottom: 50, left: 60})
         .x(d3.time.scale().domain([minDate, maxDate]))
         .compose(composeCharts)
         .mouseZoomable(false)

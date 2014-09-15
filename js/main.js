@@ -207,14 +207,14 @@ $("document").ready(function () {
       composite
         .width(500).height(300)
         .dimension(dateDim)
-        .margins({top: 30, right: 60, bottom: 50, left: 60})
+        .margins({top: 30, right: 70, bottom: 50, left: 60})
         .x(d3.time.scale().domain([minDate, maxDate]))
         .compose(composeCharts)
         .mouseZoomable(false)
         .brushOn(true)
         .elasticY(true)
         .renderHorizontalGridLines(true)
-        .legend(dc.legend().x(70).y(0).itemHeight(13).gap(5));
+        .legend(dc.legend().x(450).y(0).itemHeight(13).gap(5));
 
       var brush       = composite.brush();
       var extent      = brush.extent();

@@ -1,0 +1,38 @@
+body {
+  /*background: #4E4E4E;*/
+  background: #2F2F2F;
+  color: #CCC;
+}
+.uk-navbar {
+  padding: 10px;
+}
+.dc-legend-item, .dc-chart g text {
+  fill: white;
+}
+
+/*.dc-chart g.row text,
+#pie-chart-mimes text,
+#pie-chart-rtypes text {
+  fill: black;
+}*/
+.uk-form {
+  width: 450px
+}
+.uk-progress-bar {
+  -moz-transition: none !important;
+  -webkit-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
+}
+
+
+.uk-panel-box {
+  background: #202020;
+  color: #CCC;
+  border-color: #000;
+  box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
+  -webkit-box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
+}
+.uk-panel-box > .uk-panel-title {
+  color: #CCC;
+}

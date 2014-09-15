@@ -43,7 +43,7 @@ $("document").ready(function () {
     var parseDatetime = d3.time.format.iso.parse;
 
     var granularity   = $('#granularity').val();
-    var geoAvailable  = data[0].hasOwnProperty('geoip-latitude') && data[0].hasOwnProperty('geoip-longitude');
+    var geoAvailable  = data.length > 0 && data[0].hasOwnProperty('geoip-latitude') && data[0].hasOwnProperty('geoip-longitude');
 
     if (geoAvailable) {
       $('#choropleth-chart').text('');
@@ -128,8 +128,15 @@ $("document").ready(function () {
         departmentsDim = ndx.dimension(function (d) { return d.departmentName; });
       }
 
-      var minDate = new Date(dateDim.bottom(1)[0].dd);
-      var maxDate = new Date(dateDim.top(1)[0].dd);
+      var minDate;
+      var maxDate;
+      if (dateDim.bottom(1).length && dateDim.top(1).length) {
+        minDate = new Date(dateDim.bottom(1)[0].dd);
+        maxDate = new Date(dateDim.top(1)[0].dd);
+      } else {
+        minDate = new Date();
+        maxDate = new Date(minDate.getTime() + 86400000);
+      }
 
       var groupBy = function (field, value) {
         return dateDim.group().reduceSum(function (d) { return d[field] == value ? 1 : 0; });

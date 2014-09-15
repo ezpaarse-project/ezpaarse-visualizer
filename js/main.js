@@ -5,8 +5,10 @@ $("document").ready(function () {
     alert('The File APIs are not fully supported in this browser.');
   }
 
-  var status   = $('#status');
-  var progress = $('#progress');
+  var status    = $('#status');
+  var progress  = $('#progress');
+  var launcher  = $('#launcher');
+  var restarter = $('#restarter');
 
   var distance = function(a, b) {
     return Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2);
@@ -17,6 +19,9 @@ $("document").ready(function () {
 
     var file = $('#file').prop('files')[0];
     if (!file) { return; }
+
+    $('.step-1').show();
+    launcher.prop('disabled', true);
 
     var reader = new FileReader();
     status.text('Reading file');
@@ -305,8 +310,16 @@ $("document").ready(function () {
         geoChart.on('filtered', updateDatatable);
         zoom("#choropleth-chart");
       }
+
+      $('.step-0, .step-1').hide();
+      $('.step-2').show();
+      launcher.prop('disabled', false);
     });
   }
 
-  $('#launcher').click(readFile);
+  launcher.click(readFile);
+  restarter.click(function () {
+    $('.step-1, .step-2').hide();
+    $('.step-0').show();
+  });
 });

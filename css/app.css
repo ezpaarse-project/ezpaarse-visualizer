@@ -2,6 +2,16 @@ body {
   background: #2F2F2F;
   color: #CCC;
 }
+#logo {
+  width: 500px;
+  opacity: 0.5;
+  display: block;
+  margin: 20px auto;
+}
+.step-1,
+.step-2 {
+  display: none
+}
 .uk-navbar {
   padding: 10px;
 }

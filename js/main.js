@@ -1,5 +1,34 @@
 $("document").ready(function () {
 
+  /**
+   * Workaround for broken brush feature in dc.js 2.0
+   */
+  (function() {
+    var compositeChart = dc.compositeChart;
+    dc.compositeChart = function (parent, chartGroup) {
+      var _chart = compositeChart(parent, chartGroup);
+
+      _chart._brushing = function () {
+        var extent = _chart.extendBrush();
+        var rangedFilter = null;
+        if(!_chart.brushIsEmpty(extent)) {
+          rangedFilter = dc.filters.RangedFilter(extent[0], extent[1]);
+        }
+
+        dc.events.trigger(function () {
+          if (!rangedFilter) {
+            _chart.filter(null);
+          } else {
+            _chart.replaceFilter(rangedFilter);
+          }
+          _chart.redrawGroup();
+        }, dc.constants.EVENT_DELAY);
+      };
+
+      return _chart;
+    };
+  })();
+
   // Check for the various File API support.
   if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
     alert('The File APIs are not fully supported in this browser.');

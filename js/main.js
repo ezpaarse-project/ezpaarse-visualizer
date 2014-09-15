@@ -159,7 +159,7 @@ $("document").ready(function () {
 
       for (var mime in mimes) {
         composeCharts.push(dc.lineChart(composite)
-          .colors([color(mime)])
+          .colors(color(mime))
           .group(groupBy('mime', mime), mime));
       }
 
@@ -200,7 +200,7 @@ $("document").ready(function () {
         .margins({top: 30, right: 30, bottom: 30, left: 30})
         .dimension(platformsDim)
         .group(platformsDim.group())
-        .colors(['#3182BD'])
+        .colors('#3182BD')
         .ordering(function(d) { return -d.value })
         .elasticX(true);
 
@@ -209,8 +209,9 @@ $("document").ready(function () {
         .dimension(mimeDim)
         .group(mimeDim.group())
         .innerRadius(50)
+        .legend(dc.legend().x(320).y(0).itemHeight(13).gap(5))
         .label(function (d) {
-          return d.data.key + ' (' + d.data.value + ')';
+          return d.key + ' (' + d.value + ')';
         });
 
       rtypesChart
@@ -218,8 +219,9 @@ $("document").ready(function () {
         .dimension(rtypeDim)
         .group(rtypeDim.group())
         .innerRadius(50)
+        .legend(dc.legend().x(320).y(0).itemHeight(13).gap(5))
         .label(function (d) {
-          return d.data.key + ' (' + d.data.value + ')';
+          return d.key + ' (' + d.value + ')';
         });
 
       if (geoAvailable) {

@@ -22,7 +22,7 @@
    sodipodi:docname="logo.svg"><metadata
    id="metadata4021"><rdf:RDF><cc:Work
        rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title /></cc:Work></rdf:RDF></metadata><defs
    id="defs4019" /><sodipodi:namedview
    pagecolor="#ffffff"
    bordercolor="#666666"
@@ -42,7 +42,7 @@
    inkscape:window-x="-8"
    inkscape:window-y="-8"
    inkscape:window-maximized="1"
-   inkscape:current-layer="Layer_1"
+   inkscape:current-layer="text4023"
    fit-margin-top="0"
    fit-margin-left="0"
    fit-margin-right="0"
@@ -122,17 +122,37 @@
 
 
 
-<text
-   xml:space="preserve"
+<g
    style="font-size:22px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:7.48000002px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-   x="80.376549"
-   y="63.300835"
-   id="text4023"
-   sodipodi:linespacing="125%"><tspan
-     sodipodi:role="line"
-     id="tspan4025"
-     x="80.376549"
-     y="63.300835"
-     style="font-size:22px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:7.48000002px;font-family:Poiret One;-inkscape-font-specification:Poiret One"
-     rotate="0 0 0 0 0 0 0 0 0 0 0">VISUALIZER</tspan></text>
+   id="text4023"><path
+     d="m 89.022667,63.674797 -8.20636,-16.873962 0.792236,0 7.47992,15.290161 7.436279,-15.290161 0.703613,0 z"
+     style="font-variant:normal;font-stretch:normal;line-height:125%;font-family:Poiret One;-inkscape-font-specification:Poiret One"
+     id="path2996" /><path
+     d="m 106.88969,46.800835 0.72644,0 0,16.5 -0.72644,0 z"
+     style="font-variant:normal;font-stretch:normal;line-height:125%;font-family:Poiret One;-inkscape-font-specification:Poiret One"
+     id="path2998" /><path
+     d="m 125.1582,49.132561 c -0.33749,-0.615871 -0.79593,-1.099828 -1.37533,-1.451874 -0.57942,-0.352015 -1.22842,-0.52803 -1.94702,-0.528046 -0.71862,1.6e-5 -1.33092,0.2237 -1.83692,0.671051 -0.506,0.447383 -0.759,1.059799 -0.759,1.83725 l 0,0.110107 c 0,0.923841 0.51338,1.767102 1.54016,2.529786 0.43998,0.322724 0.9349,0.641744 1.48477,0.957061 0.54986,0.315338 1.09984,0.65271 1.64993,1.012116 0.55009,0.359424 1.04881,0.740772 1.49619,1.144043 0.44736,0.403287 0.81405,0.89821 1.10007,1.484772 0.286,0.586574 0.429,1.231888 0.42901,1.935943 l 0,0.220215 c -1e-5,1.393354 -0.473,2.500694 -1.41897,3.322022 -0.94599,0.821329 -2.11566,1.231994 -3.50901,1.231994 -1.83333,0 -3.256,-0.755309 -4.268,-2.26593 l 0,-1.188355 c 0.38135,0.836103 0.94229,1.514427 1.68283,2.034974 0.74054,0.520549 1.66078,0.780823 2.76074,0.780822 1.09995,10e-7 2.05332,-0.351917 2.86011,-1.055755 0.80677,-0.703835 1.21017,-1.642545 1.21017,-2.816132 l 0,-0.131592 c 0,-0.733596 -0.19068,-1.404647 -0.57202,-2.013153 -0.38135,-0.608493 -0.85804,-1.107109 -1.43005,-1.495849 -0.57203,-0.388725 -1.19541,-0.795809 -1.87015,-1.221253 -0.67475,-0.425426 -1.29802,-0.821432 -1.86981,-1.188019 -0.5718,-0.366566 -1.04837,-0.82848 -1.42972,-1.385742 -0.38135,-0.557239 -0.57202,-1.165962 -0.57202,-1.826172 l 0,-0.153747 c 0,-1.02676 0.32998,-1.811498 0.98996,-2.354218 0.65997,-0.542687 1.4738,-0.814039 2.4415,-0.814056 1.34948,1.7e-5 2.42034,0.498633 3.21258,1.49585 l 0,1.121887 z"
+     style="font-variant:normal;font-stretch:normal;line-height:125%;font-family:Poiret One;-inkscape-font-specification:Poiret One"
+     id="path3000" /><path
+     d="m 141.98861,63.609001 -0.21955,0 c -1.34949,0 -2.48984,-0.469411 -3.42105,-1.408233 -0.93121,-0.938821 -1.39682,-2.119453 -1.39682,-3.541901 l 0,-11.858032 0.72577,0 0,11.835876 c 0,1.246545 0.40328,2.280479 1.20984,3.101807 0.80655,0.82133 1.8039,1.231995 2.99203,1.231994 1.18813,10e-7 2.18189,-0.406971 2.9813,-1.220916 0.79938,-0.813942 1.19908,-1.85157 1.19909,-3.112885 l 0,-11.835876 0.72577,0 0,11.81372 c -1e-5,1.437666 -0.46573,2.629488 -1.39715,3.57547 -0.93145,0.945984 -2.06453,1.418976 -3.39923,1.418976 z"
+     style="font-variant:normal;font-stretch:normal;line-height:125%;font-family:Poiret One;-inkscape-font-specification:Poiret One"
+     id="path3002" /><path
+     d="m 164.81718,46.404716 8.25,16.896119 -0.77008,0 -3.12397,-6.292237 -8.82202,0 -3.07965,6.292237 -0.68213,0 z m -0.0658,1.518006 -4.11426,8.448059 8.27216,0 z"
+     style="font-variant:normal;font-stretch:normal;line-height:125%;font-family:Poiret One;-inkscape-font-specification:Poiret One"
+     id="path3004" /><path
+     d="m 183.57446,46.800835 0,15.862182 5.10388,0 0,0.637818 -5.82965,0 0,-16.5 z"
+     style="font-variant:normal;font-stretch:normal;line-height:125%;font-family:Poiret One;-inkscape-font-specification:Poiret One"
+     id="path3006" /><path
+     d="m 198.34438,46.800835 0.72644,0 0,16.5 -0.72644,0 z"
+     style="font-variant:normal;font-stretch:normal;line-height:125%;font-family:Poiret One;-inkscape-font-specification:Poiret One"
+     id="path3008" /><path
+     d="m 217.16276,62.663017 0,0.637818 -8.29431,0 7.26037,-15.862183 -7.26037,0 0,-0.637817 8.3601,0 -7.28186,15.862182 z"
+     style="font-variant:normal;font-stretch:normal;line-height:125%;font-family:Poiret One;-inkscape-font-specification:Poiret One"
+     id="path3010" /><path
+     d="m 226.859,46.800835 5.9176,0 0,0.637817 -5.19183,0 0,8.97644 4.3338,0 0,0.637818 -4.3338,0 0,5.610107 5.19183,0 0,0.637818 -5.9176,0 z"
+     style="font-variant:normal;font-stretch:normal;line-height:125%;font-family:Poiret One;-inkscape-font-specification:Poiret One"
+     id="path3012" /><path
+     d="m 242.46011,46.800835 0.94598,0 c 1.42244,1.6e-5 2.67267,0.524369 3.7507,1.573059 1.07802,1.04872 1.61703,2.280713 1.61704,3.695984 -1e-5,1.415293 -0.54999,2.643593 -1.64994,3.684906 -1.09996,1.041327 -2.28059,1.561987 -3.5419,1.561981 l -0.15442,0 5.67658,5.98407 -0.94599,0 -4.99444,-5.236145 0,5.236145 -0.70361,0 z m 0.70361,9.878112 0.39612,0 c 1.1879,7e-6 2.23649,-0.454633 3.14578,-1.363922 0.90927,-0.909272 1.36391,-1.987294 1.36392,-3.234069 -1e-5,-1.246753 -0.4693,-2.332161 -1.4079,-3.256226 -0.9386,-0.924037 -2.00924,-1.386062 -3.21191,-1.386078 l -0.28601,0 z"
+     style="font-variant:normal;font-stretch:normal;line-height:125%;font-family:Poiret One;-inkscape-font-specification:Poiret One"
+     id="path3014" /></g>
 </svg>

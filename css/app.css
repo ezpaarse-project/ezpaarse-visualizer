@@ -21,9 +21,6 @@ body {
 #choropleth-chart .selected path {
   stroke-width: 0.8;
 }
-#pie-chart-mimes svg, #pie-chart-rtypes svg {
-  width: 500px;
-}
 .uk-form {
   width: 450px
 }

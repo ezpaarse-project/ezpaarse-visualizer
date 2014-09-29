@@ -1,34 +1,5 @@
 $("document").ready(function () {
 
-  /**
-   * Workaround for broken brush feature in dc.js 2.0
-   */
-  (function() {
-    var compositeChart = dc.compositeChart;
-    dc.compositeChart = function (parent, chartGroup) {
-      var _chart = compositeChart(parent, chartGroup);
-
-      _chart._brushing = function () {
-        var extent = _chart.extendBrush();
-        var rangedFilter = null;
-        if(!_chart.brushIsEmpty(extent)) {
-          rangedFilter = dc.filters.RangedFilter(extent[0], extent[1]);
-        }
-
-        dc.events.trigger(function () {
-          if (!rangedFilter) {
-            _chart.filter(null);
-          } else {
-            _chart.replaceFilter(rangedFilter);
-          }
-          _chart.redrawGroup();
-        }, dc.constants.EVENT_DELAY);
-      };
-
-      return _chart;
-    };
-  })();
-
   // Check for the various File API support.
   if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
     alert('The File APIs are not fully supported in this browser.');
@@ -200,7 +171,7 @@ $("document").ready(function () {
 
       for (var mime in mimes) {
         composeCharts.push(dc.lineChart(composite)
-          .colors(color(mime))
+          .colors([color(mime)])
           .group(groupBy('mime', mime), mime));
       }
 
@@ -241,7 +212,7 @@ $("document").ready(function () {
         .margins({top: 30, right: 30, bottom: 30, left: 30})
         .dimension(platformsDim)
         .group(platformsDim.group())
-        .colors('#3182BD')
+        .colors(['#3182BD'])
         .ordering(function(d) { return -d.value })
         .elasticX(true);
 
@@ -250,9 +221,8 @@ $("document").ready(function () {
         .dimension(mimeDim)
         .group(mimeDim.group())
         .innerRadius(50)
-        .legend(dc.legend().x(320).y(0).itemHeight(13).gap(5))
         .label(function (d) {
-          return d.key + ' (' + d.value + ')';
+          return d.data.key + ' (' + d.data.value + ')';
         });
 
       rtypesChart
@@ -260,9 +230,8 @@ $("document").ready(function () {
         .dimension(rtypeDim)
         .group(rtypeDim.group())
         .innerRadius(50)
-        .legend(dc.legend().x(320).y(0).itemHeight(13).gap(5))
         .label(function (d) {
-          return d.key + ' (' + d.value + ')';
+          return d.data.key + ' (' + d.data.value + ')';
         });
 
       if (geoAvailable) {

@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <link rel="stylesheet" type="text/css" href="css/dc.css" />
   <link rel="stylesheet" type="text/css" href="css/uikit.almost-flat.min.css" />
+  <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css" />
   <link rel="stylesheet" type="text/css" href="css/app.css" />
 </head>
 <body>
@@ -57,40 +58,46 @@
 
   <div class="uk-grid uk-margin-left uk-margin step-2">
     <div class="uk-width uk-grid-margin" style="width: 600px">
-      <div class="uk-panel uk-panel-box">
+      <div class="draggable resizable uk-panel uk-panel-box">
+        <i class="move-icon uk-icon-arrows"></i>
         <div class="uk-panel-title">Evolution of the consultations</div>
         <div id="line-chart"></div>
       </div>
     </div>
     <div class="uk-width uk-grid-margin" style="width: 550px">
-      <div class="uk-panel uk-panel-box">
+      <div class="draggable resizable uk-panel uk-panel-box">
+        <i class="move-icon uk-icon-arrows"></i>
         <div class="uk-panel-title">Consultations per platform</div>
         <div id="bar-chart"></div>
       </div>
     </div>
 
     <div class="uk-width uk-grid-margin" style="width: 400px">
-      <div class="uk-panel uk-panel-box">
+      <div class="draggable resizable uk-panel uk-panel-box">
+        <i class="move-icon uk-icon-arrows"></i>
         <div class="uk-panel-title">Nature of consultations</div>
         <div id="pie-chart-mimes"></div>
       </div>
     </div>
     <div class="uk-width uk-grid-margin" style="width: 400px">
-      <div class="uk-panel uk-panel-box">
+      <div class="draggable resizable uk-panel uk-panel-box">
+        <i class="move-icon uk-icon-arrows"></i>
         <div class="uk-panel-title">Consultation types</div>
         <div id="pie-chart-rtypes"></div>
       </div>
     </div>
 
     <div class="uk-width uk-grid-margin" style="width: 670px">
-      <div class="uk-panel uk-panel-box">
+      <div class="draggable resizable uk-panel uk-panel-box">
+        <i class="move-icon uk-icon-arrows"></i>
         <div class="uk-panel-title">Locations</div>
         <div id="choropleth-chart"></div>
       </div>
     </div>
 
     <div class="uk-width uk-grid-margin" style="width: 670px">
-      <div class="uk-panel uk-panel-box">
+      <div class="draggable uk-panel uk-panel-box">
+        <i class="move-icon uk-icon-arrows"></i>
         <div class="uk-panel-title">Most consulted titles</div>
         <table id="data-table" class="uk-table">
           <thead><tr>
@@ -105,6 +112,7 @@
   </div>
 
   <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="js/jquery-ui.min.js"></script>
   <script type="text/javascript" src="js/d3.min.js"></script>
   <script type="text/javascript" src="js/crossfilter.min.js"></script>
   <script type="text/javascript" src="js/dc.min.js"></script>

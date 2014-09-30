@@ -10,6 +10,33 @@ $("document").ready(function () {
   var launcher  = $('#launcher');
   var restarter = $('#restarter');
 
+  $('.draggable').draggable({ handle: '.move-icon' });
+  $('.resizable').resizable({
+    minHeight: 200,
+    minWidth: 300,
+    helper: 'ui-resizable-helper'
+  }).on('resizestop', function (event, ui) {
+    var chartAnchor = ui.element.find('.dc-chart').attr('id');
+    var width       = ui.element.width();
+    var height      = ui.element.height();
+
+    dc.chartRegistry.list().forEach(function (chart) {
+      if (chart.anchorName() == chartAnchor) {
+        chart.width(ui.element.width()).height(ui.element.height());
+
+        if (chart.hasOwnProperty('radius')) {
+          chart.radius(Math.min(width, height) / 2).innerRadius(Math.min(width, height) / 6);
+        }
+
+        if (chart.hasOwnProperty('legend')) {
+          if (chart.legend()) { chart.legend().x(width - 50); }
+        }
+
+        chart.render();
+      }
+    });
+  });
+
   var distance = function(a, b) {
     return Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2);
   }

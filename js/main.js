@@ -28,8 +28,8 @@ $("document").ready(function () {
           chart.radius(Math.min(width, height) / 2).innerRadius(Math.min(width, height) / 6);
         }
 
-        if (chart.hasOwnProperty('legend')) {
-          if (chart.legend()) { chart.legend().x(width - 50); }
+        if (chart.hasOwnProperty('legend') && chart.legend()) {
+          chart.legend().x(width - 50);
         }
 
         chart.render();
@@ -270,7 +270,7 @@ $("document").ready(function () {
 
         var zoom = function(target) {
           var zoom = d3.behavior.zoom()
-              .scaleExtent([1, 15])
+              .scaleExtent([0, 15])
               .on("zoom", function move() {
                 var t = d3.event.translate;
                 var s = d3.event.scale;
@@ -283,6 +283,10 @@ $("document").ready(function () {
           var g         = mappa.select('g');
           var mapHeight = d3.select(target).attr('height')
         };
+
+        geoChart.on('postRender', function () {
+          zoom("#choropleth-chart");
+        });
 
         geoChart
           .width(600).height(600)
@@ -333,7 +337,6 @@ $("document").ready(function () {
 
       if (geoAvailable) {
         geoChart.on('filtered', updateDatatable);
-        zoom("#choropleth-chart");
       }
 
       $('.step-0, .step-1').hide();

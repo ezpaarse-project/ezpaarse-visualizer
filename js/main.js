@@ -10,6 +10,8 @@ $("document").ready(function () {
   var launcher  = $('#launcher');
   var restarter = $('#restarter');
 
+  var dimensions = {};
+
   $('.draggable').draggable({ handle: '.move-icon' });
   $('.resizable').resizable({
     minHeight: 200,
@@ -22,16 +24,22 @@ $("document").ready(function () {
 
     dc.chartRegistry.list().forEach(function (chart) {
       if (chart.anchorName() == chartAnchor) {
-        chart.width(ui.element.width()).height(ui.element.height());
+        var sizing = { width: width, height: height };
+        chart.width(width).height(height);
 
         if (chart.hasOwnProperty('radius')) {
-          chart.radius(Math.min(width, height) / 2).innerRadius(Math.min(width, height) / 6);
+          sizing.innerRadius = Math.min(width, height) / 6;
+          sizing.radius = Math.min(width, height) / 2;
+
+          chart.radius(sizing.radius).innerRadius(sizing.innerRadius);
         }
 
         if (chart.hasOwnProperty('legend') && chart.legend()) {
-          chart.legend().x(width - 50);
+          sizing.legend = width - 50;
+          chart.legend().x(sizing.legend);
         }
 
+        dimensions[chartAnchor] = sizing;
         chart.render();
       }
     });
@@ -186,6 +194,7 @@ $("document").ready(function () {
       var mimesChart  = dc.pieChart("#pie-chart-mimes");
       var rtypesChart = dc.pieChart("#pie-chart-rtypes");
       var composite   = dc.compositeChart('#line-chart');
+      var size;
 
       composite.on("postRender", function rotateAxisLabels(c) {
         d3.selectAll('#line-chart .axis.x text')
@@ -202,8 +211,9 @@ $("document").ready(function () {
           .group(groupBy('mime', mime), mime));
       }
 
+      size = dimensions['line-chart'] || { width: 500, height: 300, legend: 450 };
       composite
-        .width(500).height(300)
+        .width(size.width).height(size.height)
         .dimension(dateDim)
         .margins({top: 30, right: 70, bottom: 50, left: 60})
         .x(d3.time.scale().domain([minDate, maxDate]))
@@ -212,7 +222,7 @@ $("document").ready(function () {
         .brushOn(true)
         .elasticY(true)
         .renderHorizontalGridLines(true)
-        .legend(dc.legend().x(450).y(0).itemHeight(13).gap(5));
+        .legend(dc.legend().x(size.legend).y(0).itemHeight(13).gap(5));
 
       var brush       = composite.brush();
       var extent      = brush.extent();
@@ -234,8 +244,9 @@ $("document").ready(function () {
         }
       });
 
+      size = dimensions['bar-chart'] || { width: 500, height: 300 };
       rowChart
-        .width(500).height(300)
+        .width(size.width).height(size.height)
         .margins({top: 30, right: 30, bottom: 30, left: 30})
         .dimension(platformsDim)
         .group(platformsDim.group())
@@ -243,20 +254,22 @@ $("document").ready(function () {
         .ordering(function(d) { return -d.value })
         .elasticX(true);
 
+      size = dimensions['pie-chart-mimes'] || { width: 300, height: 300, innerRadius: 50 };
       mimesChart
-        .width(300).height(300)
+        .width(size.width).height(size.height)
         .dimension(mimeDim)
         .group(mimeDim.group())
-        .innerRadius(50)
+        .innerRadius(size.innerRadius)
         .label(function (d) {
           return d.data.key + ' (' + d.data.value + ')';
         });
 
+      size = dimensions['pie-chart-rtypes'] || { width: 300, height: 300, innerRadius: 50 };
       rtypesChart
-        .width(300).height(300)
+        .width(size.width).height(size.height)
         .dimension(rtypeDim)
         .group(rtypeDim.group())
-        .innerRadius(50)
+        .innerRadius(size.innerRadius)
         .label(function (d) {
           return d.data.key + ' (' + d.data.value + ')';
         });
@@ -288,8 +301,9 @@ $("document").ready(function () {
           zoom("#choropleth-chart");
         });
 
+        size = dimensions['choropleth-chart'] || { width: 600, height: 600 };
         geoChart
-          .width(600).height(600)
+          .width(size.width).height(size.height)
           .dimension(departmentsDim)
           .group(departmentsGroup)
           .projection(d3.geo.mercator().center([8, 47]).scale(2000))
